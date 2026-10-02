@@ -18,7 +18,8 @@ def battle(knights_config: dict) -> dict:
     arthur.hp -= red_knight.power - arthur.protection
     red_knight.hp -= arthur.power - red_knight.protection
 
-    for knight in [lancelot, arthur, mordred, red_knight]: knight.hp = max(0, knight.hp)
+    for knight in [lancelot, arthur, mordred, red_knight]:
+        knight.hp = max(0, knight.hp)
 
     return {
         lancelot.name: lancelot.hp,
