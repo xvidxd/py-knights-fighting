@@ -3,10 +3,14 @@ from app.models.knight import Knight
 
 def battle(knights_config: dict) -> dict:
 
-    lancelot = Knight(knights_config["lancelot"])
-    arthur = Knight(knights_config["arthur"])
-    mordred = Knight(knights_config["mordred"])
-    red_knight = Knight(knights_config["red_knight"])
+    knights = {
+        name: Knight(data) for name, data in knights_config.items()
+    }
+
+    lancelot = knights["lancelot"]
+    arthur = knights["arthur"]
+    mordred = knights["mordred"]
+    red_knight = knights["red_knight"]
 
     lancelot.hp -= mordred.power - lancelot.protection
     mordred.hp -= lancelot.power - mordred.protection
@@ -14,14 +18,7 @@ def battle(knights_config: dict) -> dict:
     arthur.hp -= red_knight.power - arthur.protection
     red_knight.hp -= arthur.power - red_knight.protection
 
-    if lancelot.hp <= 0:
-        lancelot.hp = 0
-    if mordred.hp <= 0:
-        mordred.hp = 0
-    if arthur.hp <= 0:
-        arthur.hp = 0
-    if red_knight.hp <= 0:
-        red_knight.hp = 0
+    for knight in [lancelot, arthur, mordred, red_knight]: knight.hp = max(0, knight.hp)
 
     return {
         lancelot.name: lancelot.hp,
